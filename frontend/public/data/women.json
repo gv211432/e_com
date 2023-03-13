@@ -1,0 +1,182 @@
+{
+  "products": [
+    {
+      "name": "Black Dress",
+      "id": "dress-1",
+      "e-tag": "ladies girls cloths wears dress",
+      "tag": "dress",
+      "count": "",
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+      "img_url": "/img/products/women/dress/balck-dress.jpg",
+      "price": "700"
+    },
+    {
+      "name": "Blue Ethnic",
+      "id": "dress-2",
+      "e-tag": "ladies girls cloths wears dress",
+      "tag": "dress",
+      "count": "",
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+      "img_url": "/img/products/women/dress/blue-ethnic-dress.jpg",
+      "price": "1390"
+    },
+    {
+      "name": "Green Dress",
+      "id": "dress-3",
+      "e-tag": "ladies girls cloths wears dress",
+      "tag": "dress",
+      "count": "",
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+      "img_url": "/img/products/women/dress/green-dress.jpg",
+      "price": "1000"
+    },
+    {
+      "name": "Pink Full",
+      "id": "dress-4",
+      "e-tag": "ladies girls cloths wears dress",
+      "tag": "dress",
+      "count": "6",
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+      "img_url": "/img/products/women/dress/pink-full-dress.jpg",
+      "price": "567"
+    },
+    {
+      "name": "Black women Pant",
+      "id": "pants-1",
+      "e-tag": "ladies girls cloths wears pants",
+      "tag": "pants",
+      "count": "14",
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+      "img_url": "/img/products/women/pants/women-pant-black.jpg",
+      "price": ""
+    },
+    {
+      "name": "Royel Blue",
+      "id": "pants-2",
+      "e-tag": "ladies girls cloths wears pants",
+      "tag": "pants",
+      "count": "9",
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+      "img_url": "/img/products/women/pants/women-pant-blue.jpg",
+      "price": ""
+    },
+    {
+      "name": "Formal Women",
+      "id": "pants-3",
+      "e-tag": "ladies girls cloths wears pants",
+      "tag": "pants",
+      "count": "5",
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+      "img_url": "/img/products/women/pants/women-pant-checks.jpg",
+      "price": ""
+    },
+    {
+      "name": "Blue-style Skirt",
+      "id": "skirt-1",
+      "e-tag": "ladies girls cloths wears skirt",
+      "tag": "skirt",
+      "count": "9",
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+      "img_url": "/img/products/women/skirts/blue-style-skirt.jpg",
+      "price": ""
+    }, {
+      "name": "Geans Light",
+      "id": "skirt-1",
+      "e-tag": "ladies girls cloths wears skirt soft",
+      "tag": "skirt",
+      "count": "9",
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+      "img_url": "/img/products/women/skirts/light_geans_skirt.jpg",
+      "price": ""
+    }, {
+      "name": "Red Soft",
+      "id": "skirt-1",
+      "e-tag": "ladies girls cloths wears skirt tilted ligth",
+      "tag": "skirt",
+      "count": "9",
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+      "img_url": "/img/products/women/skirts/red_tilted_soft_light.jpg",
+      "price": ""
+    },
+    {
+      "name": "Golden Skirt",
+      "id": "skirt-2",
+      "e-tag": "ladies girls cloths wears skirt",
+      "tag": "skirt",
+      "count": "9",
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+      "img_url": "/img/products/women/skirts/golden-skirt.jpg",
+      "price": ""
+    },
+    {
+      "name": "Green Skirt",
+      "id": "skirt-3",
+      "e-tag": "ladies girls cloths wears skirt",
+      "tag": "skirt",
+      "count": "9",
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+      "img_url": "/img/products/women/skirts/green-skirt.jpg",
+      "price": ""
+    },
+    {
+      "name": "Traditional Skirt",
+      "id": "skirt-4",
+      "e-tag": "ladies girls cloths wears skirt",
+      "tag": "skirt",
+      "count": "9",
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+      "img_url": "/img/products/women/skirts/traditional-skirt.jpg",
+      "price": ""
+    },
+    {
+      "name": "boxes_women_pant",
+      "id": "",
+      "e-tag": "ladies girls cloths wears skirt",
+      "tag": "pants",
+      "count": "9",
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+      "img_url": "img/products/women/pants/boxes_women_pant.jpg",
+      "price": ""
+    },
+    {
+      "name": "ocher_yellow_women_pant",
+      "id": "",
+      "e-tag": "ladies girls cloths wears skirt",
+      "tag": "pants",
+      "count": "9",
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+      "img_url": "img/products/women/pants/ocher_yellow_women_pant.jpg",
+      "price": ""
+    },
+    {
+      "name": "white_grey_women",
+      "id": "",
+      "e-tag": "ladies girls cloths wears skirt",
+      "tag": "pants",
+      "count": "9",
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+      "img_url": "img/products/women/pants/white_grey_women.jpg",
+      "price": ""
+    },
+    {
+      "name": "Peach Unique attire",
+      "id": "dress",
+      "e-tag": "ladies girls cloths wears dress top",
+      "tag": "dress",
+      "count": "9",
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+      "img_url": "img/products/women/dress/peach_unique.jpg",
+      "price": ""
+    },
+    {
+      "name": "Red traditional lengha",
+      "id": "dress",
+      "e-tag": "ladies girls cloths wears dress top",
+      "tag": "dress",
+      "count": "9",
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
+      "img_url": "img/products/women/dress/red_traditional_lengha.jpg",
+      "price": ""
+    }
+  ]
+}

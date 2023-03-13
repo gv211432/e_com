@@ -1,0 +1,50 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+#hero-main {
+  background-color: black;
+  position: relative;
+}
+
+#hero-img {
+  /* height: calc(90vh - 1.8rem); */
+  height: 100vh;
+  opacity: 0.25;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+}
+
+#hero-content {
+  height: 100vh;
+  margin-top: -100vh;
+  z-index: 2;
+}
+
+#hero-bg-img {
+  opacity: 0.2;
+  z-index: 1;
+}
+
+#e-shop-logo {
+  opacity: 1;
+  margin-top: 18rem;
+}
+
+#brand-discription {
+  color: rgb(232, 229, 229);
+  font-weight: 500;
+  z-index: 20;
+}

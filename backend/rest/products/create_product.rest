@@ -1,0 +1,17 @@
+POST http://localhost:5000/api/product/create HTTP/1.1
+Content-Type: application/json
+
+{
+  "name":"Spatula",
+  "sub_description":"This is used for stering..",
+  "description":"Lorem iladfaldfjlkadjklfjal;dkkkkkkkadfklllllllllllllljka;weifwja;lwk",
+  "category":"Kitchenware",
+  "tags":"kitchen food steel utensils",
+  "rating":"4",
+  "price":"456",
+  "mrp":"678",
+  "is_varified":"true",
+  "all_img_url":[],
+  "company_name":"Mohan Inc",
+  "in_stock_count":"789"
+}
