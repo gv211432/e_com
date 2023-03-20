@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import Footer from '../../components/Footer/Footer';
 import Navbar from '../../components/Navbar/Navbar';
 import UserContext from '../../context/globalContext';
 import axiosInstance from '../../helpers/axiosInstance';
@@ -9,7 +10,6 @@ const Login = () => {
     username: "",
     password: "",
   });
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await axiosInstance.post("/api/auth/login", userDetails);
@@ -21,7 +21,7 @@ const Login = () => {
     <Navbar />
     {/* this is the main body of this page */}
     <div className="container mt-3 pt-3" style={{}} >
-      <div className="row">
+      <div className="row" style={{ minHeight: "90%" }}>
         <div className="col d-none d-sm-block"></div>
         <div className="col col-12 col-md-8 col-lg-6">
           <div className="row border border-warning align-middle"
@@ -66,6 +66,10 @@ const Login = () => {
         <div className="col d-none d-sm-block"></div>
       </div>
     </div>
+    <br />
+    <br />
+    <br />
+    <Footer />
   </>
   );
 };

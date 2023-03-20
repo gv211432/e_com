@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Footer from '../../components/Footer/Footer';
 import Navbar from '../../components/Navbar/Navbar';
 import axiosInstance from '../../helpers/axiosInstance';
 
@@ -72,7 +73,8 @@ const Register = () => {
                 </div>
 
                 <div className="form-check">
-                  <input className="form-check-input btn-danger" type="checkbox" defaultValue id="flexCheckChecked" defaultChecked />
+                  <input className="form-check-input btn-danger" type="checkbox" 
+                  defaultValue id="flexCheckChecked" defaultChecked />
                   <label className="form-check-label" htmlFor="flexCheckChecked">
                     Keep Me Logged In
                   </label>
@@ -92,6 +94,8 @@ const Register = () => {
         <div className="col d-none d-sm-block"></div>
       </div>
     </div>
+    <br />
+    <Footer />
   </>
   );
 };

@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 
 const Card = ({ entry, index }) => {
@@ -6,28 +7,16 @@ const Card = ({ entry, index }) => {
   let getRndInteger = (min, max) => {
     return Math.floor(Math.random() * (max - min)) + min;
   };
-
-  let max_price = 0;
-  let sell_price = entry.price
-    ? parseInt(entry.price)
-    : getRndInteger(1000, 2000);
-
-  if (entry.price) {
-    max_price =
-      Math.trunc(Math.random() * parseInt(entry.price)) + parseInt(entry.price);
-  } else {
-    max_price = getRndInteger(2000, 3000);
-  }
-
   return (
     <div className='col'>
       <div className="card the-cards"
         style={{ width: "400px", height: "800px", margin: "10px 0" }}
       >
-
         <div style={{ width: '100%', height: '470px' }}>
-          <img src={entry.img_url}
-            alt={entry.name}
+          <img src={entry?.img_url ? entry?.img_url : 
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6at7RwZOM_yVpsUZWimO0o75bYbKAE1DaTg&usqp=CAU"
+        }
+            alt={entry?.name}
             width="100%"
             height={"100%"}
             className="img-fluid"
@@ -41,7 +30,7 @@ const Card = ({ entry, index }) => {
           <center>
             <h5 className="card-title" style={{ fontWeight: 700 }}>
               {entry.name}
-              {Math.random() > 0.3
+              {entry?.is_varified
                 ? <sup><i className="ps-1 text-success fa-solid fa-circle-check" />
                   <span style={{ fontSize: '0.6rem' }}>
                     varified
@@ -49,27 +38,27 @@ const Card = ({ entry, index }) => {
                 </sup>
                 : ""}
             </h5>
-            <h4>₹{sell_price.toString()}
+            <h4>₹{entry?.price?.toString() || 500}
               <sup style={{ textDecoration: 'line-through', color: 'red' }}>
-                ₹{max_price.toString()}
+                ₹{entry?.mrp?.toString() || 1000}
               </sup>
             </h4>
             <h6 style={{ color: 'rgba(0,0,0,0.4)' }}>
               Item in stock:
               <span style={{ color: 'green' }}>
-                {Math.trunc(Math.random() * 100)}
+                {entry?.in_stock_count || 0}
               </span></h6>
             <p className="card-text">
-              Some quick example text to build on the card title and
-              make up the bulk of the card's content.
+              {entry?.sub_description || "Your short description go here. It describes the product briefly."}
             </p>
             <button className="btn btn-warning">
+              <FontAwesomeIcon
+                height={38}
+                width={38}
+                icon="fa-solid fa-cart-shopping"
+                className='text-light me-1 '
+              />
               Add to cart
-              <i className="fa-solid fa-cart-shopping text-light"
-                style={{
-                  fontSize: '1.5rem', marginLeft: '0.1rem',
-                  verticalAlign: 'middle'
-                }} />
             </button>
           </center>
         </div>

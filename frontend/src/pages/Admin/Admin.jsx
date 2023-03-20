@@ -14,70 +14,26 @@
 // 11. Owner
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import Card from '../../components/Carousel/Card';
 import Featured from '../../components/Carousel/Featured';
+import UserContext from '../../context/globalContext';
 import axiosInstance from '../../helpers/axiosInstance';
 
 const Admin = () => {
-  const [productData, setProductData] = useState({
-    product_id: "",
-    name: "",
-    sub_description: "",
-    description: "",
-    tags: "",
-    rating: "",
-    price: "",
-    mrp: "",
-    is_varified: true,
-    all_img_url: [],
-    company_name: "",
-    in_stock_count: "",
-    category: "General",
-  });
-
-  const [imgFiles, setImgFiles] = useState([]);
-  const [imgUrl, setImgUrl] = useState([]);
+  const { setProductData: setGlobalData, productData: globalData, setImgFiles, imgFiles } = useContext(UserContext);
+  const navigate = useNavigate();
+  const [productData, setProductData] = useState(sessionStorage.getItem("product_info") ? JSON.parse(sessionStorage.getItem("product_info")) : globalData);
   const [selectUserImg, setSelecteUserImg] = useState([]);
-  const [imgIndex, setImgIndex] = useState(0);
-
-  const [cardData, setCardData] = useState({
-    name: productData.name,
-    id: productData.product_id,
-    tag: productData.tags,
-    img_url: "",
-    description: productData.sub_description,
-    price: productData.price
-  });
-
-  useEffect(() => {
-    let intervals;
-    if (selectUserImg.length) {
-      if (imgIndex < selectUserImg.length) {
-        console.log(selectUserImg);
-        setCardData(p => ({ ...p, img_url: selectUserImg[imgIndex] }));
-        setImgIndex(p => p + 1);
-      }
-
-      intervals = setInterval(() => {
-        if (imgIndex < selectUserImg.length) {
-          setCardData(p => ({ ...p, img_url: selectUserImg[imgIndex] }));
-          setImgIndex(p => p + 1);
-        } else {
-          setImgIndex(0);
-        }
-      }, 4000);
-    }
-    return () => clearInterval(intervals);
-  }, [selectUserImg]);
+  useEffect(() => { setProductData(p => ({ ...p, img_url: selectUserImg[0], all_img_url: selectUserImg })); }, [selectUserImg]);
 
   const handleProductSave = async (img_urls) => {
     const res = await axiosInstance.post("/api/product/create", {
       ...productData,
       all_img_url: img_urls
     });
-
     if (res.status == 200) {
       alert("success");
     }
@@ -120,13 +76,19 @@ const Admin = () => {
             style={{ borderRadius: "0.5rem" }}
           >
             <center>
-              <Card entry={cardData} index={0} />
+              <Card entry={productData} index={0} />
             </center>
             <br />
           </div>
           <div className="row">
             <center>
-              Preview <span className='text-primary' style={{ cursor: "pointer" }}>
+              Preview <span className='text-primary'
+                onClick={e => {
+                  setGlobalData(productData);
+                  sessionStorage.setItem("product_info", JSON.stringify(productData));
+                  navigate("/single_product");
+                }}
+                style={{ cursor: "pointer" }}>
                 this product{" "}
               </span>
               page.
@@ -143,7 +105,41 @@ const Admin = () => {
               <center>
                 <h3>Create New Product</h3>
               </center>
-              <div className="mb-3">
+              <div className="mb-1">
+                <label className="form-label text-muted">
+                  Upload Images of the Product
+                </label>
+                <input
+                  className="form-control form-control-sm"
+                  id={"input_img_files"}
+                  type="file"
+                  name="file"
+                  size="sm"
+                  multiple
+                  onChange={(e) => {
+                    for (const d of e.target.files) {
+                      setImgFiles(p => [...p, d]);
+                      const reader = new FileReader();
+                      reader.readAsDataURL(d);
+                      reader.onload = (e) => {
+                        setSelecteUserImg(p => [...p, e.target.result]);
+                        // setProductData(p => ({ ...p, all_img_url: [...(p.all_img_url), e.target.value] }));
+                      };
+                    }
+                  }}
+                />
+              </div>
+
+              <div>
+                {selectUserImg.length ? <p className='text-muted' style={{ marginBottom: "-0.1rem" }}>Select the below image to fit in left card.</p> : null}
+                {selectUserImg?.map(d => <img width={"100rem"} height={"100rem"}
+                  className={`m-1 img-fluid border border-warning ${productData.img_url == d ? "border-3" : ""}`}
+                  src={d} alt=""
+                  style={{ borderRadius: "0.3rem" }}
+                  onClick={e => setProductData(p => ({ ...p, img_url: d }))}
+                />)}
+              </div>
+              <div className="mt-3 mb-3">
                 <input
                   className="form-control form-control-sm "
                   type="text"
@@ -162,7 +158,7 @@ const Admin = () => {
                     checked={productData.is_varified}
                     onChange={e => {
                       e.preventDefault();
-                      setProductData(p => ({ ...p, is_varified: !p.is_varified }));
+                      setProductData(p => ({ ...p, is_varified: !(p.is_varified) }));
                     }}
                   />
                   <label className="form-check-label" htmlFor="disabledFieldsetCheck">
@@ -297,38 +293,6 @@ const Admin = () => {
                   }}
                 />
               </div>
-              <div className="mb-3">
-                <label className="form-label">
-                  Upload Images of the Product
-                </label>
-                <input
-                  className="form-control form-control-sm"
-                  id={"input_img_files"}
-                  type="file"
-                  name="file"
-                  size="sm"
-                  multiple
-                  onChange={(e) => {
-                    for (const d of e.target.files) {
-                      setImgFiles(p => [...p, d]);
-                      const reader = new FileReader();
-                      reader.readAsDataURL(d);
-                      reader.onload = (e) => {
-                        setSelecteUserImg(p => [...p, e.target.result]);
-                        // setProductData(p => ({ ...p, all_img_url: [...(p.all_img_url), e.target.value] }));
-                      };
-                    }
-                  }}
-                />
-              </div>
-
-              <div>
-                {selectUserImg?.map(d => <img width={"100rem"} height={"100rem"}
-                  className='m-1 img-fluid border border-warning' src={d} alt=""
-                  style={{ borderRadius: "0.3rem" }}
-                />)}
-              </div>
-
               <div className="row mb-3 mt-3">
                 <div className="col">
                   <input
@@ -337,6 +301,7 @@ const Admin = () => {
                     onClick={(e) => {
                       e.preventDefault();
                       setSelecteUserImg([]);
+                      document.getElementById("input_img_files").value = "";
                     }}
                     value='Reset Images'
                   />
@@ -348,6 +313,7 @@ const Admin = () => {
                     value='Reset Full'
                     onClick={(e) => {
                       e.preventDefault();
+                      document.getElementById("input_img_files").value = "";
                       setProductData({
                         product_id: "",
                         name: "",
@@ -379,9 +345,11 @@ const Admin = () => {
 
               <div className="mb-3 ps-2">
                 <div className="form-check">
-                  <input className="form-check-input" type="checkbox" id="disabledFieldsetCheck" />
+                  <input className="form-check-input" checked type="checkbox" id="disabledFieldsetCheck" />
                   <label className="form-check-label" htmlFor="disabledFieldsetCheck">
-                    Accecpt all <a href='#' style={{ textDecoration: "underline" }}>
+                    Accecpt all <a
+                      style={{ textDecoration: "underline" }}
+                    >
                       terms & conditions
                     </a>
                   </label>

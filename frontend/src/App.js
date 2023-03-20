@@ -28,6 +28,25 @@ library.add(far, fas);
 function App() {
   // Main apps states
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [productId, setProductId] = useState(null);
+  const [imgFiles, setImgFiles] = useState([]);
+  const [productData, setProductData] = useState({
+    product_id: "",
+    name: "",
+    sub_description: "",
+    description: "",
+    tags: "",
+    rating: "",
+    price: "",
+    mrp: "",
+    is_varified: true,
+    all_img_url: [],
+    img_url: "",
+    company_name: "",
+    in_stock_count: "",
+    category: "General",
+  });
+
 
   // this is used for handlin the routes
   const router = createBrowserRouter([
@@ -56,7 +75,7 @@ function App() {
     {
       path: "/single_product",
       element: <>
-        <Products />
+        <SingleProduct />
       </>
     },
     {
@@ -81,7 +100,10 @@ function App() {
 
   return (
     <UserContext.Provider value={{
-      isLoggedIn, setIsLoggedIn
+      isLoggedIn, setIsLoggedIn,
+      productId, setProductId,
+      productData, setProductData,
+      imgFiles, setImgFiles
     }}>
       <div
         style={{
@@ -89,7 +111,6 @@ function App() {
           overflow: "hidden"
         }}>
         <RouterProvider router={router} />
-        <ToastContainer />
       </div>
     </UserContext.Provider>
   );
