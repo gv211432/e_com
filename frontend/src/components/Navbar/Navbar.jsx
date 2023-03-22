@@ -99,7 +99,7 @@ const Navbar = () => {
                     <NavLink to="/" style={{ textDecoration: 'none', color: 'black' }}>Home</NavLink>
                   </div>
                   <div className="col">
-                    <NavLink to="/products#nav-product" style={{ textDecoration: 'none', color: 'black' }}>Products</NavLink>
+                    <NavLink to="/products" style={{ textDecoration: 'none', color: 'black' }}>Products</NavLink>
                   </div>
                   <div className="col dropdown">
                     <NavLink className="dropdown-toggle" to="#" role="button" style={{ textDecoration: 'none', color: 'black' }} id="dropdownMenuWomen" data-bs-toggle="dropdown" aria-expanded="false">

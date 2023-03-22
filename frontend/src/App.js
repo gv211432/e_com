@@ -21,6 +21,9 @@ import Admin from './pages/Admin/Admin';
 import SingleProduct from './pages/SingleProduct/SingleProduct';
 import UserContext from './context/globalContext';
 import Cart from './pages/Cart/Cart';
+import ShowProduct from './pages/SingleProduct/ShowProduct';
+import Dashboard from './pages/Admin/Dashboard';
+import EditProduct from './pages/Admin/EditProduct';
 
 config.autoAddCss = false;
 library.add(far, fas);
@@ -79,6 +82,12 @@ function App() {
       </>
     },
     {
+      path: "/show_product",
+      element: <>
+        <ShowProduct />
+      </>
+    },
+    {
       path: "/register",
       element: <>
         {isLoggedIn ? <Home /> : <Register />}
@@ -88,6 +97,18 @@ function App() {
       path: "/admin/add_products",
       element: <>
         <Admin />
+      </>
+    },
+    {
+      path: "/admin/edit_products",
+      element: <>
+        <EditProduct />
+      </>
+    },
+    {
+      path: "/admin/dashboard",
+      element: <>
+        <Dashboard />
       </>
     },
     {

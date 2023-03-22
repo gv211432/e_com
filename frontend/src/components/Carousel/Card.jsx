@@ -1,9 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import config from '../../config';
+import UserContext from '../../context/globalContext';
 
-const Card = ({ entry, index }) => {
-
-  // generater random number in given range
+const Card = ({ entry, index, extra }) => {
+  const { productData, setProductData } = useContext(UserContext);
+  const navigate = useNavigate();  // generater random number in given range
   let getRndInteger = (min, max) => {
     return Math.floor(Math.random() * (max - min)) + min;
   };
@@ -13,9 +16,9 @@ const Card = ({ entry, index }) => {
         style={{ width: "400px", height: "800px", margin: "10px 0" }}
       >
         <div style={{ width: '100%', height: '470px' }}>
-          <img src={entry?.img_url ? entry?.img_url : 
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6at7RwZOM_yVpsUZWimO0o75bYbKAE1DaTg&usqp=CAU"
-        }
+          <img src={entry?.all_img_url?.length ? `${config.baseURI}:${config.port}/api/common/files/${entry?.all_img_url[0]}` :
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6at7RwZOM_yVpsUZWimO0o75bYbKAE1DaTg&usqp=CAU"
+          }
             alt={entry?.name}
             width="100%"
             height={"100%"}
@@ -24,12 +27,18 @@ const Card = ({ entry, index }) => {
               borderTopLeftRadius: 6,
               borderTopRightRadius: 6,
               objectFit: "fill"
-            }} />
+            }}
+            onClick={() => {
+              // alert("Hello");
+              navigate("/show_product", { state: { data: entry, extra: extra, index } });
+              setProductData(entry);
+            }}
+          />
         </div>
         <div className="card-body">
           <center>
             <h5 className="card-title" style={{ fontWeight: 700 }}>
-              {entry.name}
+              {entry?.name}
               {entry?.is_varified
                 ? <sup><i className="ps-1 text-success fa-solid fa-circle-check" />
                   <span style={{ fontSize: '0.6rem' }}>
@@ -51,7 +60,11 @@ const Card = ({ entry, index }) => {
             <p className="card-text">
               {entry?.sub_description || "Your short description go here. It describes the product briefly."}
             </p>
-            <button className="btn btn-warning">
+            <button className="btn btn-warning"
+              onClick={() => {
+                alert("Add to cart");
+              }}
+            >
               <FontAwesomeIcon
                 height={38}
                 width={38}
