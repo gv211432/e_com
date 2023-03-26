@@ -6,6 +6,7 @@ import UserContext from '../../context/globalContext';
 import Navbar from '../../components/Navbar/Navbar';
 import { useLocation } from 'react-router-dom';
 import config from '../../config';
+import axiosInstance from '../../helpers/axiosInstance';
 
 // this the star component
 const Star = ({ i, stars, setStars }) => {
@@ -192,6 +193,16 @@ const ShowProduct = () => {
     return () => sessionStorage.setItem("product_info", JSON.stringify(productData));
   }, []);
 
+
+  const handleAddToCart = async () => {
+    const res = await axiosInstance.post("/api/cart/add_to_cart", {
+      product_id: productData._id
+    });
+    if (res.status == 200) {
+      alert(JSON.stringify(res?.data));
+    }
+  };
+
   return (<>
     <Navbar />
     <br />
@@ -291,7 +302,12 @@ const ShowProduct = () => {
               <h5>Sold by <span className='text-secondary'>{productData?.company_name || "Dummy Company Ltd"}</span> and Fulfilled by EShop.</h5>
 
               <center style={{ width: "100%" }}>
-                <button className="btn btn-warning mx-auto mb-2" style={{ width: "100%" }}>
+                <button
+                  className="btn btn-warning mx-auto mb-2"
+                  onClick={() => {
+                    handleAddToCart();
+                  }}
+                  style={{ width: "100%" }}>
                   <FontAwesomeIcon
                     style={{ cursor: "pointer" }}
                     icon={`fa-solid fa-cart-shopping`}
@@ -319,7 +335,7 @@ const ShowProduct = () => {
           </div>
         </div>
       </div>
-      {index + 1 < extra.length ? <SecondaryProduct data={extra} index={index + 1} /> : null}
+      {(index && (index + 1 < extra.length)) ? <SecondaryProduct data={extra} index={index + 1} /> : null}
     </div>
   </>
   );

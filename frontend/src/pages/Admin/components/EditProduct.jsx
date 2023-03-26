@@ -15,19 +15,26 @@
 
 
 import React, { useContext, useEffect, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import Card from '../../components/Carousel/Card';
-import Featured from '../../components/Carousel/Featured';
-import UserContext from '../../context/globalContext';
-import axiosInstance from '../../helpers/axiosInstance';
+import Card from '../../../components/Carousel/Card';
+import CardLocal from '../../../components/Carousel/CardLocal';
+import config from '../../../config';
+import UserContext from '../../../context/globalContext';
+import axiosInstance from '../../../helpers/axiosInstance';
 
 const EditProduct = () => {
   const { setProductData: setGlobalData, productData: globalData, setImgFiles, imgFiles } = useContext(UserContext);
   const navigate = useNavigate();
-  const [productData, setProductData] = useState(sessionStorage.getItem("product_info") ? JSON.parse(sessionStorage.getItem("product_info")) : globalData);
-  const [selectUserImg, setSelecteUserImg] = useState([]);
-  useEffect(() => { setProductData(p => ({ ...p, img_url: selectUserImg[0], all_img_url: selectUserImg })); }, [selectUserImg]);
+  const { state } = useLocation();
+  const [productData, setProductData] = useState(state?.data ? state?.data : globalData);
+  const [selectUserImg, setSelecteUserImg] = useState(productData.all_img_url);
+  const [isLocal, setIsLocal] = useState(true);
+  useEffect(() => {
+    if (selectUserImg) {
+      setProductData(p => ({ ...p, img_url: selectUserImg[0], all_img_url: selectUserImg }));
+    }
+  }, [selectUserImg]);
 
   const handleProductSave = async (img_urls) => {
     const res = await axiosInstance.post("/api/product/create", {
@@ -69,14 +76,13 @@ const EditProduct = () => {
     <div className="container">
       <div className="row border border-warning m-3"
         style={{ borderRadius: "0.5rem" }}>
-
         {/* product overview */}
         <div className="col p-2">
           <div className="row"
             style={{ borderRadius: "0.5rem" }}
           >
             <center>
-              <Card entry={productData} index={0} />
+              <CardLocal entry={productData} index={0} local={isLocal} />
             </center>
             <br />
           </div>
@@ -86,7 +92,7 @@ const EditProduct = () => {
                 onClick={e => {
                   setGlobalData(productData);
                   sessionStorage.setItem("product_info", JSON.stringify(productData));
-                  navigate("/single_product");
+                  navigate("/show_product", { state: { data: productData } });
                 }}
                 style={{ cursor: "pointer" }}>
                 this product{" "}
@@ -134,10 +140,27 @@ const EditProduct = () => {
                 {selectUserImg.length ? <p className='text-muted' style={{ marginBottom: "-0.1rem" }}>Select the below image to fit in left card.</p> : null}
                 {selectUserImg?.map(d => <img width={"100rem"} height={"100rem"}
                   className={`m-1 img-fluid border border-warning ${productData.img_url == d ? "border-3" : ""}`}
+                  src={d[13] == "-" ? `${config.baseURI}:${config.port}/api/common/files/${d}` : d}
+                  alt={d}
+                  style={{ borderRadius: "0.3rem" }}
+                  onClick={e => {
+                    if (d[13] == "-") {
+                      setIsLocal(false);
+                    } else {
+                      setIsLocal(true);
+                    }
+                    setProductData(p => ({ ...p, img_url: d }));
+                  }}
+                />)}
+                {/* {productData.all_img_url?.map(d => <img width={"100rem"} height={"100rem"}
+                  className={`m-1 img-fluid border border-warning ${productData.img_url == d ? "border-3" : ""}`}
                   src={d} alt=""
                   style={{ borderRadius: "0.3rem" }}
-                  onClick={e => setProductData(p => ({ ...p, img_url: d }))}
-                />)}
+                  onClick={e => {
+                    setIsLocal(false);
+                    setProductData(p => ({ ...p, img_url: d }));
+                  }}
+                />)} */}
               </div>
               <div className="mt-3 mb-3">
                 <input

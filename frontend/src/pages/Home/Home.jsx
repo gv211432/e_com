@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 import Navbar from '../../components/Navbar/Navbar';
 import "./Home.css";
@@ -29,7 +30,7 @@ const Home = () => {
                   <br />
                   <button className="btn btn-warning ps-6 pe-6 lh-1" style={{ borderRadius: '15px 0 15px 0', minWidth: '50%' }}
                     onclick="click_handle('Hello gaurav')">
-                    <span style={{ fontSize: '2rem', fontWeight: 300, color: 'rgb(240, 240, 240)' }}>Start Shopping</span>
+                    <NavLink to={"/products"} style={{ fontSize: '2rem', fontWeight: 300, color: 'rgb(240, 240, 240)' }}>Start Shopping</NavLink>
                     <i className="fa-solid fa-cart-shopping text-light" style={{ fontSize: '2rem', marginLeft: '0.1rem', verticalAlign: 'middle' }} />
                   </button>
                 </div>

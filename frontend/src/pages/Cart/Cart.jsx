@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { toast } from "react-toastify";
+import axiosInstance from '../../helpers/axiosInstance';
 
 const Cart = () => {
 
@@ -83,10 +84,21 @@ const Cart = () => {
     let summary_mount_point = document.getElementById("summary_mount_point");
     summary_mount_point.innerHTML = summary_data;
   };
+
+  const fetchData = async () => {
+    const res = await axiosInstance.post("/api/cart/fetch_cart");
+    if (res.status == 200) {
+      alert(JSON.stringify(res?.data));
+    }
+  };
+
   useEffect(() => {
     preapare_summary(); // call it initially
-
   }, []);
+
+  useEffect(() => {
+    fetchData();
+  });
 
 
 
@@ -262,8 +274,8 @@ const Cart = () => {
                         />
                         <button
                           className="input-group-text btn btn-secondary"
-                          // onclick="inc_dec_items(true, '${item.name}')"
-                          // onClick={setData(p => [{ ...p[0], no: p[0].no + 1 }])}
+                        // onclick="inc_dec_items(true, '${item.name}')"
+                        // onClick={setData(p => [{ ...p[0], no: p[0].no + 1 }])}
                         >
                           +
                         </button>

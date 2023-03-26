@@ -69,7 +69,7 @@ const Navbar = () => {
                       <span className="visually-hidden">Cart Items</span>
                     </span>
                   </NavLink>
-                  {isLoggedIn && <NavLink to="/cart"
+                  {isLoggedIn && <NavLink to="/profile"
                     className='bg-danger mt-1 ms-3'
                     style={{
                       height: "2rem", width: "2rem",
@@ -86,67 +86,6 @@ const Navbar = () => {
                   className="position-absolute text-light translate-middle bg-danger rounded-pill ps-1 pe-1">
                 </span>
               </div>
-            </div>
-          </div>
-        </nav>
-        {/* secondary navbar */}
-        <nav className="navbar navbar-light bg-warning lh-1" style={{ padding: '-10px auto -10px auto' }} id="app_sub_header">
-          <div className="container-fluid">
-            <div className="container">
-              <center>
-                <div className="row" style={{ marginTop: '-0.2rem', maxWidth: '30rem' }}>
-                  <div className="col">
-                    <NavLink to="/" style={{ textDecoration: 'none', color: 'black' }}>Home</NavLink>
-                  </div>
-                  <div className="col">
-                    <NavLink to="/products" style={{ textDecoration: 'none', color: 'black' }}>Products</NavLink>
-                  </div>
-                  <div className="col dropdown">
-                    <NavLink className="dropdown-toggle" to="#" role="button" style={{ textDecoration: 'none', color: 'black' }} id="dropdownMenuWomen" data-bs-toggle="dropdown" aria-expanded="false">
-                      Women
-                    </NavLink>
-                    <ul className="dropdown-menu" style={{ outline: 'none', outlineWidth: 0 }} aria-labelledby="dropdownMenuWomen" id="women_dropdown_conten">
-                      <li>
-                        <NavLink className="dropdown-item" to="/products#nav-women">All Products</NavLink>
-                      </li>
-                      <li>
-                        <NavLink className="dropdown-item" to="/products#nav-dress">Dresses</NavLink>
-                      </li>
-                      <li>
-                        <NavLink className="dropdown-item" to="/products#nav-pants">Pants</NavLink>
-                      </li>
-                      <li>
-                        <NavLink className="dropdown-item" to="/products#nav-skirts">Skirts</NavLink>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="col dropdown">
-                    <NavLink className="dropdown-toggle" to="#" role="button" style={{ textDecoration: 'none', color: 'black' }} id="dropdownMenuMen" data-bs-toggle="dropdown" aria-expanded="false">
-                      Men
-                    </NavLink>
-                    <ul style={{ outline: 'none' }} className="dropdown-menu" id="dropdown_men_content" aria-labelledby="dropdownMenuMen">
-                      <li>
-                        <NavLink className="dropdown-item" to="/products#nav-men">All Products</NavLink>
-                      </li>
-                      <li>
-                        <NavLink className="dropdown-item" to="/products#nav-shirts">Shirts</NavLink>
-                      </li>
-                      <li>
-                        <NavLink className="dropdown-item" to="/products#nav-men-pants">Pants</NavLink>
-                      </li>
-                      <li>
-                        <NavLink className="dropdown-item" to="/products#nav-hoodies">Hoodies</NavLink>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="col">
-                    <NavLink to="/products#nav-kids" style={{ textDecoration: 'none', color: 'black' }}>Kids</NavLink>
-                  </div>
-                  <div className="col">
-                    <NavLink to="/contact" style={{ textDecoration: 'none', color: 'black' }}>Contact</NavLink>
-                  </div>
-                </div>
-              </center>
             </div>
           </div>
         </nav>

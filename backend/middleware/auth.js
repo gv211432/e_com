@@ -4,9 +4,10 @@ const user = require("../model/user");
 const session_validator = async (req, res, next) => {
   console.log("Session ids ==>", req.session.passport);
   // bypassing some routes, the session validation check
-  if (req.url == "/backend/login"
-    || req.url == "/backend/logout"
-    || req.url == "/backend/registration") return next();
+  if (req.url == "/api/auth/login"
+    || req.url == "/api/auth/logout"
+    || req.url == "/api/auth/registration"
+    ) return next();
 
   // making sure all session have varified passport object, with users details
   if (req.session.passport && req.session.passport.user && req.session.passport.user.id) {

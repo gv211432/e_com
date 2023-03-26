@@ -3,8 +3,9 @@ const express = require('express');
 const router = express.Router();
 const user = require('../../model/user');
 
-router.get('/user/:id', async (req, res) => {
-  const user_data = (await user.find({ _id: req.params.id }).lean())[0];
+router.post('/user', async (req, res) => {
+  const user_id = req.session.passport.user.id;
+  const user_data = (await user.find({ _id: user_id }).lean())[0];
   if (user_data) {
     // const { password, tmp } = user_data;
     return res.status(200).json({

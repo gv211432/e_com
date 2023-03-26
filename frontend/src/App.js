@@ -22,8 +22,9 @@ import SingleProduct from './pages/SingleProduct/SingleProduct';
 import UserContext from './context/globalContext';
 import Cart from './pages/Cart/Cart';
 import ShowProduct from './pages/SingleProduct/ShowProduct';
-import Dashboard from './pages/Admin/Dashboard';
-import EditProduct from './pages/Admin/EditProduct';
+import Dashboard from './pages/Admin/components/Dashboard';
+import EditProduct from './pages/Admin/components/EditProduct';
+import Profile from './pages/Profile/Profile';
 
 config.autoAddCss = false;
 library.add(far, fas);
@@ -100,7 +101,7 @@ function App() {
       </>
     },
     {
-      path: "/admin/edit_products",
+      path: "/admin/edit_product",
       element: <>
         <EditProduct />
       </>
@@ -109,6 +110,12 @@ function App() {
       path: "/admin/dashboard",
       element: <>
         <Dashboard />
+      </>
+    },
+    {
+      path: "/profile",
+      element: <>
+        <Profile />
       </>
     },
     {

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SecondaryProduct from './SecondaryProduct';
 import UserContext from '../../context/globalContext';
 import Navbar from '../../components/Navbar/Navbar';
+import axiosInstance from '../../helpers/axiosInstance';
 
 // this the star component
 const Star = ({ i, stars, setStars }) => {
@@ -179,12 +180,26 @@ const Star = ({ i, stars, setStars }) => {
 const SingleProduct = () => {
   const [stars, setStars] = useState([1, 1, 1, 1, 0, 0]);
   const { productData, setProductData } = useContext(UserContext);
+
   useEffect(() => {
     // alert(JSON.stringify(productData));
     const pd = sessionStorage.setItem("product_info", JSON.stringify(productData));
     if (pd) setProductData(JSON.parse(pd));
     return () => sessionStorage.setItem("product_info", JSON.stringify(productData));
   }, []);
+
+  const handleAddToCart = async () => {
+    const res = await axiosInstance.post("/api/cart/add_to_cart", {
+      product_id: productData._id
+    });
+    if (res.status == 200) {
+      alert(JSON.stringify(res?.data));
+    }
+  };
+
+  const handleBuyNow = () => {
+
+  };
 
   return (<>
     <Navbar />
@@ -282,7 +297,11 @@ const SingleProduct = () => {
               <h5>Sold by <span className='text-secondary'>{productData?.company_name || "Dummy Company Ltd"}</span> and Fulfilled by EShop.</h5>
 
               <center style={{ width: "100%" }}>
-                <button className="btn btn-warning mx-auto mb-2" style={{ width: "100%" }}>
+                <button className="btn btn-warning mx-auto mb-2"
+                  onClick={() => {
+                    handleAddToCart();
+                  }}
+                  style={{ width: "100%" }}>
                   <FontAwesomeIcon
                     style={{ cursor: "pointer" }}
                     icon={`fa-solid fa-cart-shopping`}

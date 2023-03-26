@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import config from '../../config';
 import UserContext from '../../context/globalContext';
 
-const Card = ({ entry, index, extra, local }) => {
+const CardLocal = ({ entry, index, extra, local }) => {
   const { productData, setProductData } = useContext(UserContext);
   const navigate = useNavigate();  // generater random number in given range
   let getRndInteger = (min, max) => {
@@ -19,8 +19,7 @@ const Card = ({ entry, index, extra, local }) => {
           <img src={
             local ?
               entry?.img_url
-              : entry?.all_img_url?.length ? `${config.baseURI}:${config.port}/api/common/files/${entry?.all_img_url[0]}` :
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6at7RwZOM_yVpsUZWimO0o75bYbKAE1DaTg&usqp=CAU"
+              : `${config.baseURI}:${config.port}/api/common/files/${entry?.img_url}` 
           }
             alt={entry?.name}
             width="100%"
@@ -83,4 +82,4 @@ const Card = ({ entry, index, extra, local }) => {
   );
 };
 
-export default Card;
+export default CardLocal;

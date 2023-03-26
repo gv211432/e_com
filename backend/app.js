@@ -15,16 +15,31 @@ const private_key = fs.readFileSync("./cert/private-key.pem");
 var indexRouter = require('./routes/index');
 var registerRouter = require('./routes/auth/register');
 var loginRouter = require('./routes/auth/login');
+
 // products routes
-var createProduct = require('./routes/products/create_product');
 var allProduct = require('./routes/products/all_product');
+var createProduct = require('./routes/products/create_product');
+var deleteProduct = require('./routes/products/delete_product');
 var editProduct = require('./routes/products/edit_product');
 var fetchProduct = require('./routes/products/fetch_product');
+var someProduct = require('./routes/products/some_product');
+var userProduct = require('./routes/products/user_products');
+
 // users routes
 var editUser = require('./routes/user/edit_user');
 var fetchUser = require('./routes/user/fetch_user');
+
 // common apis
 var upload = require('./routes/common/upload');
+
+// cart
+var addToCart = require("./routes/cart/add_to_cart");
+var clearCart = require("./routes/cart/clear_cart");
+var fetchCart = require("./routes/cart/fetch_cart");
+
+// middleware
+var auth = require("./middleware/auth");
+
 
 var app = express();
 app.use(logger('dev'));
@@ -51,7 +66,7 @@ app.use(cors({
 app.use(session({
   secret: process.env.SESSION_SECRET || "secret",
   cookie: {
-    maxAge: 1000 * 60 * 60 * 6, // 60 min
+    maxAge: 1000 * 60 * 60 * 60, // 60 hr
     secure: false,
   },
   resave: false,
@@ -63,6 +78,7 @@ app.use(session({
   path: "/"
 }));
 app.use(passport.authenticate('session'));
+app.use(auth);
 
 app.use('/', indexRouter);
 app.use('/api', registerRouter);
@@ -74,6 +90,11 @@ app.use('/api', fetchProduct);
 app.use('/api', editUser);
 app.use('/api', fetchUser);
 app.use('/api', upload);
+app.use('/api', someProduct);
+app.use('/api', userProduct);
+app.use('/api', addToCart);
+app.use('/api', clearCart);
+app.use('/api', fetchCart);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

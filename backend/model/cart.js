@@ -9,5 +9,5 @@ const productSchema = mongoose.Schema({
 }, { timestamps: true });
 
 // finally making model of it
-const order = mongoose.model("order", productSchema);
-module.exports = order;
+const cart = mongoose.model("cart", productSchema);
+module.exports = cart;

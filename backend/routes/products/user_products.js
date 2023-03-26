@@ -2,23 +2,24 @@
 const express = require('express');
 const router = express.Router();
 const product = require('../../model/product');
-const cart = require('../../model/cart');
 
-router.post('/fetch_cart', async (req, res, next) => {
+router.post('/product/user_products', async (req, res, next) => {
   // console.log(record);
   const user_id = req.session.passport.user.id;
 
-  const result = await cart.updateOne({ customer_id: user_id }, {
-    product_id: []
+  const product_data = await product.find({
+    createdByd: user_id
   });
+  console.log(product_data);
 
-  if (result.modifiedCount) {
+  if (product_data) {
     return res.status(200).json({
-      msg: "Successfully cleared.",
+      msg: "Successfully fetched..",
+      data: product_data,
     });
   } else {
     return res.status(203).json({
-      msg: "Unable to clear"
+      msg: "Error while fetching!"
     });
   }
 });

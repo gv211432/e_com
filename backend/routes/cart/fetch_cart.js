@@ -3,18 +3,19 @@ const express = require('express');
 const router = express.Router();
 const product = require('../../model/product');
 const cart = require('../../model/cart');
+const { default: mongoose } = require('mongoose');
 
-router.post('/fetch_cart', async (req, res, next) => {
+router.post('/cart/fetch_cart', async (req, res, next) => {
   // console.log(record);
   const user_id = req.session.passport.user.id;
   const product_data = await cart.aggregate([
-    { $match: { customer_id: user_id } },
+    { $match: { customer_id: mongoose.Types.ObjectId(user_id) } },
     {
       $lookup: {
-        from: "product",
+        from: "products",
         localField: "product_id",
         foreignField: "_id",
-        as: "products"
+        as: "product"
       }
     }
   ]);
