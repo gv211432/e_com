@@ -2,19 +2,30 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { toast } from "react-toastify";
 import axiosInstance from '../../helpers/axiosInstance';
+import Navbar from "../../components/Navbar/Navbar";
+import config from '../../config';
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+
 
 const Cart = () => {
+  const initialOptions = {
+    "client-id": "test",
+    currency: "USD",
+    intent: "capture",
+    "data-client-token": "abc123xyz==",
+  };
+  // const [data, setData] = useState([{
+  //   name: "Blue hoodie",
+  //   id: 1,
+  //   tag: "hoodie",
+  //   etag: "cloths wears men fashion ",
+  //   img_url: "/img/products/men/hoodies/blue-hood.jpg",
+  //   description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto consequuntur vero sunt provident illo sit nihil, nesciunt atque magni explicabo eveniet optio ut quam fugit debitis, hic laborum. Eius, hic.",
+  //   price: "789",
+  //   no: 9
+  // }]);
 
-  const [data, setData] = useState([{
-    name: "Blue hoodie",
-    id: 1,
-    tag: "hoodie",
-    etag: "cloths wears men fashion ",
-    img_url: "/img/products/men/hoodies/blue-hood.jpg",
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto consequuntur vero sunt provident illo sit nihil, nesciunt atque magni explicabo eveniet optio ut quam fugit debitis, hic laborum. Eius, hic.",
-    price: "789",
-    no: 9
-  }]);
+  const [data, setData] = useState([]);
 
   // let cart_data = JSON.parse(data);
   const summary_total = {
@@ -60,10 +71,10 @@ const Cart = () => {
     // let cart = data;
     let cart_arr = data;
     let total = 0;
-    cart_arr.forEach((data) => {
-      total += data.price * data.no;
+    data?.forEach((data) => {
+      total += data.price * (data?.no || 1);
     });
-    summary_data += create_summary_row("Cost", "₹" + total.toString());
+    summary_data += create_summary_row("Cost", "₹" + (total?.toString() || "0"));
     if (total > 0) {
       summary_data += create_summary_row("Delivery", "+₹100", "danger");
       summary_data += create_summary_row("Promocode", "-₹50", "success");
@@ -88,19 +99,17 @@ const Cart = () => {
   const fetchData = async () => {
     const res = await axiosInstance.post("/api/cart/fetch_cart");
     if (res.status == 200) {
-      alert(JSON.stringify(res?.data));
+      setData(res?.data?.data[0]?.product);
     }
   };
 
   useEffect(() => {
     preapare_summary(); // call it initially
-  }, []);
+  }, [data]);
 
   useEffect(() => {
     fetchData();
-  });
-
-
+  }, []);
 
 
   // // this returns dynamic html card to feed in "Items in cart"
@@ -210,7 +219,8 @@ const Cart = () => {
   //   );
   // };
 
-  return (
+  return (<>
+    <Navbar />
     <div className="container" style={{ minHeight: '80vh' }}>
       {/* this  is the row of two column, Items in cart and summary  */}
       <div className="row mt-3 mb-3 mx-auto">
@@ -221,7 +231,9 @@ const Cart = () => {
               <div className="card-body" id="item_card_mount_point">
                 {data.map((item, index) => (<div class="input-group mb-3">
                   <span className="input-group-text">
-                    <img src={item.img_url}
+                    <img src={item?.all_img_url?.length ? `${config.baseURI}:${config.port}/api/common/files/${item?.all_img_url[0]}` :
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6at7RwZOM_yVpsUZWimO0o75bYbKAE1DaTg&usqp=CAU"
+                    }
                       style={{ maxWidth: 150, maxHeight: 100, borderRadius: 6 }}
                     />
                   </span>
@@ -244,7 +256,14 @@ const Cart = () => {
                       <div className="col-lg">
                         <button
                           className="btn btn-danger mb-1"
-                          onclick="delete_item('${item.name}')"
+                          onClick={async () => {
+                            const res = await axiosInstance.post("/api/cart/remove_from_cart", {
+                              product_id: item?._id
+                            });
+                            if (res.status == 200) {
+                              fetchData();
+                            }
+                          }}
                         >
                           <FontAwesomeIcon
                             icon="fa-solid fa-trash"
@@ -261,7 +280,9 @@ const Cart = () => {
                       <div className="col input-group mb-3">
                         <button
                           className="input-group-text btn btn-secondary"
-                          onclick="inc_dec_items(false, '${item.name}')"
+                          onClick={() => setData(p => p?.map((d) => (d?._id == item?._id && d?.no > 0)
+                            ? ({ ...d, no: ((d?.no || 1) - 1) })
+                            : d))}
                         >
                           -
                         </button>
@@ -274,8 +295,9 @@ const Cart = () => {
                         />
                         <button
                           className="input-group-text btn btn-secondary"
-                        // onclick="inc_dec_items(true, '${item.name}')"
-                        // onClick={setData(p => [{ ...p[0], no: p[0].no + 1 }])}
+                          onClick={() => setData(p => p?.map((d) => d?._id == item?._id
+                            ? ({ ...d, no: ((d?.no || 1) + 1) })
+                            : d))}
                         >
                           +
                         </button>
@@ -300,7 +322,7 @@ const Cart = () => {
               <hr />
               <div id="summary_mount_point" />
               <div className="row mx-auto">
-                <button className="btn btn-warning" >
+                <button className="btn btn-warning" option >
                   Checkout
                 </button>
               </div>
@@ -309,6 +331,7 @@ const Cart = () => {
         </div>
       </div >
     </div >
+  </>
   );
 };
 

@@ -25,6 +25,7 @@ import ShowProduct from './pages/SingleProduct/ShowProduct';
 import Dashboard from './pages/Admin/components/Dashboard';
 import EditProduct from './pages/Admin/components/EditProduct';
 import Profile from './pages/Profile/Profile';
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 config.autoAddCss = false;
 library.add(far, fas);
@@ -51,6 +52,16 @@ function App() {
     category: "General",
   });
 
+  const checkLogin = async () => {
+    const res = await axiosInstance.post("/api/user");
+    if (res.status == 200) {
+      setIsLoggedIn(true);
+    }
+  };
+
+  useEffect(() => {
+    checkLogin();
+  }, []);
 
   // this is used for handlin the routes
   const router = createBrowserRouter([
@@ -59,69 +70,107 @@ function App() {
       element: (
         <>
           {isLoggedIn ? <Home /> : <Login />}
-          {/* <SingleProduct />
-          <Admin /> */}
         </>
       ),
     },
     {
       path: "/products",
       element: <>
-        <Products />
+        {
+          isLoggedIn ?
+            <Products />
+            : <Login />
+        }
       </>
     },
     {
       path: "/cart",
       element: <>
-        <Cart />
+        {
+          isLoggedIn ?
+            <Cart />
+            : <Login />
+        }
       </>
     },
     {
       path: "/single_product",
       element: <>
-        <SingleProduct />
+        {
+          isLoggedIn ?
+            <SingleProduct />
+            : <Login />
+        }
       </>
     },
     {
       path: "/show_product",
       element: <>
-        <ShowProduct />
+        {
+          isLoggedIn ?
+            <ShowProduct />
+            : <Login />
+        }
       </>
     },
     {
       path: "/register",
       element: <>
-        {isLoggedIn ? <Home /> : <Register />}
+        {
+          isLoggedIn ?
+            <Register />
+            : <Login />
+        }
       </>
     },
     {
       path: "/admin/add_products",
       element: <>
-        <Admin />
+        {
+          isLoggedIn ?
+            <Admin />
+            : <Login />
+        }
       </>
     },
     {
       path: "/admin/edit_product",
       element: <>
-        <EditProduct />
+        {
+          isLoggedIn ?
+            <EditProduct />
+            : <Login />
+        }
       </>
     },
     {
       path: "/admin/dashboard",
       element: <>
-        <Dashboard />
+        {
+          isLoggedIn ?
+            <Dashboard />
+            : <Login />
+        }
       </>
     },
     {
       path: "/profile",
       element: <>
-        <Profile />
+        {
+          isLoggedIn ?
+            <Profile />
+            : <Login />
+        }
       </>
     },
     {
       path: "*",
       element: <>
-        {isLoggedIn ? <Home /> : <Login />}
+        {
+          isLoggedIn ?
+            <Home />
+            : <Login />
+        }
       </>,
     },
   ]);

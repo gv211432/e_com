@@ -1,16 +1,27 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import config from '../../../config';
+import axiosInstance from '../../../helpers/axiosInstance';
 
-const ListedProductCard = ({ entry }) => {
+const ListedProductCard = ({ entry, updateList }) => {
   const navigate = useNavigate();
+
+  const handleDelete = async () => {
+    const res = await axiosInstance.post(`/api/product/delete`, {
+      product_id: entry?._id
+    });
+    if (res.status == 200) {
+      updateList();
+    }
+  };
+
   return (
     <div className="row border rounded m-2"
       style={{ verticalAlign: "middle" }}
     >
-      <div className="col col-12 col-sm-12 col-md-3"
-      >
+      <div className="col col-12 col-sm-12 col-md-3">
         <img
           className='img-fluid'
           style={{
@@ -53,6 +64,7 @@ const ListedProductCard = ({ entry }) => {
             icon="fa-solid fa-trash"
             className='text-danger mt-1 ms-3'
             onClick={(e) => {
+              handleDelete();
             }}
           />
         </div>

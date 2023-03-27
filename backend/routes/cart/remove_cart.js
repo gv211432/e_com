@@ -5,7 +5,7 @@ const product = require('../../model/product');
 const cart = require('../../model/cart');
 const ObjectId = require('mongoose').mongo.ObjectId;
 
-router.post('/cart/add_to_cart', async (req, res, next) => {
+router.post('/cart/remove_from_cart', async (req, res, next) => {
   // console.log(record);
   const { product_id } = req.body;
   console.log({ product_id });
@@ -14,26 +14,16 @@ router.post('/cart/add_to_cart', async (req, res, next) => {
 
   if (product_data && product_id) {
     const p_id = await ObjectId(product_id);
-    console.log({ p_id });
     const user_id = req.session.passport.user.id;
     if (await cart.findOne({ customer_id: user_id })) {
       const result = await cart.updateOne({ customer_id: user_id }, {
-        $push: {
+        $pull: {
           product_id: p_id
         }
       });
-      console.log("1 reslult:", result);
-    } else {
-      const result = await cart.create({
-        product_id: [p_id],
-        customer_id: user_id
-      });
-      console.log("2 reslult:", result);
     }
-
-
     return res.status(200).json({
-      msg: "Successfully added.",
+      msg: "Successfully removed.",
     });
   } else {
     return res.status(203).json({

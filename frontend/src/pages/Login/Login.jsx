@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 import Navbar from '../../components/Navbar/Navbar';
 import UserContext from '../../context/globalContext';
@@ -10,11 +11,13 @@ const Login = () => {
     username: "",
     password: "",
   });
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await axiosInstance.post("/api/auth/login", userDetails);
     if (res.status == 200) {
       setIsLoggedIn(true);
+      navigate("/");
     }
   };
   return (<>

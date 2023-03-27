@@ -15,6 +15,7 @@ const private_key = fs.readFileSync("./cert/private-key.pem");
 var indexRouter = require('./routes/index');
 var registerRouter = require('./routes/auth/register');
 var loginRouter = require('./routes/auth/login');
+var logoutRouter = require('./routes/auth/logout');
 
 // products routes
 var allProduct = require('./routes/products/all_product');
@@ -36,10 +37,11 @@ var upload = require('./routes/common/upload');
 var addToCart = require("./routes/cart/add_to_cart");
 var clearCart = require("./routes/cart/clear_cart");
 var fetchCart = require("./routes/cart/fetch_cart");
+var removeCart = require("./routes/cart/remove_cart");
+var countCart = require("./routes/cart/count");
 
 // middleware
 var auth = require("./middleware/auth");
-
 
 var app = express();
 app.use(logger('dev'));
@@ -80,13 +82,14 @@ app.use(session({
 app.use(passport.authenticate('session'));
 app.use(auth);
 
-app.use('/', indexRouter);
 app.use('/api', registerRouter);
 app.use('/api', loginRouter);
+app.use('/api', logoutRouter);
 app.use('/api', createProduct);
 app.use('/api', allProduct);
 app.use('/api', editProduct);
 app.use('/api', fetchProduct);
+app.use('/api', deleteProduct);
 app.use('/api', editUser);
 app.use('/api', fetchUser);
 app.use('/api', upload);
@@ -95,6 +98,8 @@ app.use('/api', userProduct);
 app.use('/api', addToCart);
 app.use('/api', clearCart);
 app.use('/api', fetchCart);
+app.use('/api', removeCart);
+app.use('/api', countCart);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

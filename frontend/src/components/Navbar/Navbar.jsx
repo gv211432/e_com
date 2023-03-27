@@ -1,10 +1,25 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import UserContext from '../../context/globalContext';
 import { NavLink } from "react-router-dom";
+import { useState } from 'react';
+import axiosInstance from "../../helpers/axiosInstance";
 
 const Navbar = () => {
   const { isLoggedIn } = useContext(UserContext);
+  const [cartCount, setCartCount] = useState(0);
+
+  const fetchData = async () => {
+    const res = await axiosInstance.post("/api/cart/count");
+    if (res.status == 200) {
+      setCartCount(res?.data?.products_count);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       <div>
@@ -57,6 +72,14 @@ const Navbar = () => {
                   {!isLoggedIn && <NavLink to="/login" className="btn btn-warning" style={{ borderRadius: '0.6rem', }}>
                     Login
                   </NavLink>}
+                  <NavLink to={"/products"}>
+                    <FontAwesomeIcon
+                      height={40}
+                      width={40}
+                      icon="fa-solid fa-house"
+                      className='text-light mt-1 ms-3'
+                    />
+                  </NavLink>
                   <NavLink to="/cart">
                     <FontAwesomeIcon
                       height={40}
@@ -65,7 +88,7 @@ const Navbar = () => {
                       className='text-light mt-1 ms-3'
                     />
                     <span className="position-absolute translate-middle badge rounded-pill bg-danger me-3">
-                      9
+                      {cartCount}
                       <span className="visually-hidden">Cart Items</span>
                     </span>
                   </NavLink>

@@ -1,15 +1,28 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import config from '../../config';
 import UserContext from '../../context/globalContext';
+import axiosInstance from '../../helpers/axiosInstance';
 
 const Card = ({ entry, index, extra, local }) => {
   const { productData, setProductData } = useContext(UserContext);
   const navigate = useNavigate();  // generater random number in given range
+
   let getRndInteger = (min, max) => {
     return Math.floor(Math.random() * (max - min)) + min;
   };
+
+  const handleAddToCart = async () => {
+    const res = await axiosInstance.post("/api/cart/add_to_cart", {
+      product_id: productData._id
+    });
+    if (res.status == 200) {
+      toast("Added to cart");
+    }
+  };
+
   return (
     <div className='col'>
       <div className="card the-cards"
@@ -65,7 +78,7 @@ const Card = ({ entry, index, extra, local }) => {
             </p>
             <button className="btn btn-warning"
               onClick={() => {
-                alert("Add to cart");
+                handleAddToCart();
               }}
             >
               <FontAwesomeIcon
@@ -79,6 +92,7 @@ const Card = ({ entry, index, extra, local }) => {
           </center>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

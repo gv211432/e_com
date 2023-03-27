@@ -35,10 +35,10 @@ const Products = () => {
         })}
         {fetchedData?.length % 3 == 2 ?
           <InvisibleCard entry={null} index={0} key={0} />
-          : <>
+          : fetchedData?.length % 3 == 1 ? <>
             <InvisibleCard entry={null} index={0} key={0} />
             <InvisibleCard entry={null} index={0} key={0} />
-          </>}
+          </> : null}
       </div>
     </>
   );

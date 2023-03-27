@@ -7,7 +7,7 @@ const session_validator = async (req, res, next) => {
   if (req.url == "/api/auth/login"
     || req.url == "/api/auth/logout"
     || req.url == "/api/auth/registration"
-    ) return next();
+  ) return next();
 
   // making sure all session have varified passport object, with users details
   if (req.session.passport && req.session.passport.user && req.session.passport.user.id) {

@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar/Navbar';
+import UserContext from '../../context/globalContext';
 import axiosInstance from '../../helpers/axiosInstance';
 
 const Profile = () => {
   const [userData, setUserData] = useState();
+  const { isLoggeIn, setIsLoggedIn } = useContext(UserContext);
+
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     const res = await axiosInstance.post("/api/user");
@@ -12,11 +16,16 @@ const Profile = () => {
       setUserData(res.data?.data);
       // alert(JSON.stringify(res.data?.data));
     }
-
   };
   useEffect(() => {
     fetchData();
   }, []);
+
+  const handleLogout = async () => {
+    const res = axiosInstance.post("/api/auth/logout");
+    setIsLoggedIn(false);
+    navigate("/login");
+  };
 
   return (<>
     <Navbar />
@@ -40,6 +49,27 @@ const Profile = () => {
               <span className='text-muted' style={{ fontSize: "29px", fontWeight: 700 }}>Total Orders: </span>
               {90}<NavLink style={{ fontSize: "19px", color: "blue", textDecoration: "underline" }}> Open cart</NavLink>
             </h2>
+            <center className='border mb-2 p-2 rounded'>
+              <button className='btn btn-success m-3'
+                onClick={async () => {
+                  navigate("/admin/add_products");
+                }}
+              >
+                Sell your product
+              </button>
+              <button className='btn btn-primary m-3'
+                onClick={async () => {
+                  navigate("/admin/dashboard");
+                }}
+              >
+                Dashboard
+              </button>
+              <button className='btn btn-danger'
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            </center>
           </div>
         </div>
       </div>

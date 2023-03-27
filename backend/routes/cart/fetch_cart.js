@@ -8,6 +8,7 @@ const { default: mongoose } = require('mongoose');
 router.post('/cart/fetch_cart', async (req, res, next) => {
   // console.log(record);
   const user_id = req.session.passport.user.id;
+  console.log({ user_id });
   const product_data = await cart.aggregate([
     { $match: { customer_id: mongoose.Types.ObjectId(user_id) } },
     {
@@ -19,13 +20,13 @@ router.post('/cart/fetch_cart', async (req, res, next) => {
       }
     }
   ]);
-  console.log(product_data);
+  const res_data = {
+    msg: "Successfully added.",
+    data: product_data,
+  };
 
   if (product_data) {
-    return res.status(200).json({
-      msg: "Successfully added.",
-      data: product_data
-    });
+    return res.status(200).json(res_data);
   } else {
     return res.status(203).json({
       msg: "Not found!!"

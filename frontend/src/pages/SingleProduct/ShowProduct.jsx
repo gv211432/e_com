@@ -195,11 +195,14 @@ const ShowProduct = () => {
 
 
   const handleAddToCart = async () => {
-    const res = await axiosInstance.post("/api/cart/add_to_cart", {
-      product_id: productData._id
-    });
-    if (res.status == 200) {
-      alert(JSON.stringify(res?.data));
+    console.log("Product id:", productData?._id);
+    if (productData?._id) {
+      const res = await axiosInstance.post("/api/cart/add_to_cart", {
+        product_id: productData?._id
+      });
+      if (res?.status == 200) {
+        alert(JSON.stringify(res?.data));
+      }
     }
   };
 
