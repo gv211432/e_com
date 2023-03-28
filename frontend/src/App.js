@@ -116,11 +116,7 @@ function App() {
     {
       path: "/register",
       element: <>
-        {
-          isLoggedIn ?
-            <Register />
-            : <Login />
-        }
+        <Register />
       </>
     },
     {

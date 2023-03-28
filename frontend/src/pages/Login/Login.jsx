@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 import Navbar from '../../components/Navbar/Navbar';
@@ -52,6 +53,13 @@ const Login = () => {
                     onChange={e => setUserDetails(p => ({ ...p, password: e.target.value }))}
                     placeholder="Enter your name" />
                 </div>
+                <div className="form-check">
+                  <input className="form-check-input btn-danger" type="checkbox"
+                    defaultValue id="flexCheckChecked" defaultChecked />
+                  <label className="form-check-label" htmlFor="flexCheckChecked">
+                    Keep Me Logged In
+                  </label>
+                </div>
                 {/* submit button */}
                 <div className="d-grid gap-2">
                   <button
@@ -61,6 +69,19 @@ const Login = () => {
                     className="btn btn-warning">
                     Login
                   </button>
+                </div>
+                <div className="d-grid gap-2 mt-2">
+                  <p
+                    type="submit"
+                    onClick={handleSubmit}
+                    className="text text-muted">
+                    No account!
+                    <NavLink to={"/register"} className="text text-primary ps-1"
+                    style={{textDecoration:"underline"}}
+                     >
+                      Register Now
+                    </NavLink>
+                  </p>
                 </div>
               </form>
             </div>
