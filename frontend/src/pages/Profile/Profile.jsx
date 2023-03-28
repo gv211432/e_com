@@ -7,6 +7,7 @@ import axiosInstance from '../../helpers/axiosInstance';
 const Profile = () => {
   const [userData, setUserData] = useState();
   const { isLoggeIn, setIsLoggedIn } = useContext(UserContext);
+  const [cartCount, setCartCount] = useState(0);
 
   const navigate = useNavigate();
 
@@ -16,7 +17,12 @@ const Profile = () => {
       setUserData(res.data?.data);
       // alert(JSON.stringify(res.data?.data));
     }
+    const res2 = await axiosInstance.post("/api/cart/count");
+    if (res2.status == 200) {
+      setCartCount(res2?.data?.products_count);
+    }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -47,7 +53,7 @@ const Profile = () => {
             </h2>
             <h2 className='border p-2 rounded'>
               <span className='text-muted' style={{ fontSize: "29px", fontWeight: 700 }}>Total Orders: </span>
-              {90}<NavLink style={{ fontSize: "19px", color: "blue", textDecoration: "underline" }}> Open cart</NavLink>
+              {cartCount}<NavLink style={{ fontSize: "19px", color: "blue", textDecoration: "underline" }}> Open cart</NavLink>
             </h2>
             <center className='border mb-2 p-2 rounded'>
               <button className='btn btn-success m-3'

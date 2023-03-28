@@ -18,7 +18,6 @@ backend/build
 
 # misc
 backend/.DS_Store
-backend/.env
 backend/.env.local
 backend/.env.development.local
 backend/.env.test.local
@@ -28,7 +27,6 @@ backend/yarn-debug.log*
 backend/yarn-error.log*
 
 frontend/.DS_Store
-frontend/.env
 frontend/.env.local
 frontend/.env.development.local
 frontend/.env.test.local
@@ -36,3 +34,6 @@ frontend/.env.production.local
 frontend/npm-debug.log*
 frontend/yarn-debug.log*
 frontend/yarn-error.log*
+
+# Local Netlify folder
+.netlify

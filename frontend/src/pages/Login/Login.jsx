@@ -72,6 +72,9 @@ const Login = () => {
     <br />
     <br />
     <br />
+    <br />
+    <br />
+    <br />
     <Footer />
   </>
   );

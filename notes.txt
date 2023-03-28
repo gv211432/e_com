@@ -1,0 +1,11 @@
+Find github repo
+https://github.com/gv211432/e_com.git
+
+Also frontend is deployed on netlify
+https://e-shop-e-com.netlify.app/
+
+
+This project is extended version of static version
+Repository https://github.com/gv211432/Internshala_FSDCapstone.git
+Deployed https://e-shop-gaurav.surge.sh
+

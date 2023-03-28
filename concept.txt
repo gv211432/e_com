@@ -1,0 +1,9 @@
+Concept notes for this project.
+
+1. Authentication: This project uses the hybrid approach of authentication of jwt with sessions.
+In the approact jwt tokens are stored as session secret on client machine.
+
+2. Backend is running nodejs with express and mongoose for all api actions. There are some middlewares for facilitating the api calls. Ex auth middleware filters out all requests with invalid/unregistered sessions. Only some routes are exempted.
+
+3. Frontend is based on ReactJs, there are many components which work together for making a whole page. Slidebar, Navbar, Footer, etc.
+
